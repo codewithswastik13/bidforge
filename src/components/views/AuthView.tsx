@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Gavel, Lock, Mail, ShieldCheck, User } from "lucide-react";
+import { ArrowRight, Lock, Mail, ShieldCheck, User } from "lucide-react";
+import { BidforgeMark } from "@/components/shared/BidforgeMark";
 import { toast } from "sonner";
 import { useRouterStore } from "@/store/router";
 import { useAuthStore } from "@/store/auth";
@@ -33,7 +34,7 @@ export function AuthView() {
     }
     if (mode === "signup") {
       signup(email);
-      toast.success("Account created", { description: "Welcome to VYRA — keep funds ready before bidding." });
+      toast.success("Account created", { description: "Welcome to BIDFORGE — keep funds ready before bidding." });
     } else {
       login(email);
       toast.success("Welcome back", { description: "Live rooms are open — good luck out there." });
@@ -47,7 +48,7 @@ export function AuthView() {
       <div className="grid w-full gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
         {/* left copy */}
         <motion.div initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE }} className="max-w-md">
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-cyan-300/80">VYRA access</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-cyan-300/80">BIDFORGE access</p>
           <h1 className="font-display mt-4 text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl">
             The room is
             <br />
@@ -122,7 +123,7 @@ export function AuthView() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder={mode === "admin" ? "ops@vyra.example" : "you@example.com"}
+                    placeholder={mode === "admin" ? "ops@bidforge.example" : "you@example.com"}
                     className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/25"
                     autoComplete="email"
                   />
@@ -151,7 +152,7 @@ export function AuthView() {
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
               <p className="flex items-center justify-center gap-1.5 pt-1 text-[10.5px] text-white/30">
-                <Gavel className="h-3 w-3" /> Protected by VYRA identity · auth backend connects later
+                <BidforgeMark className="h-3 w-3" /> Protected by BIDFORGE identity · auth backend connects later
               </p>
             </motion.div>
           </AnimatePresence>

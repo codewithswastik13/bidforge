@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Bell,
   Coins,
-  Gavel,
   HelpCircle,
   Menu,
   Search,
@@ -14,6 +13,7 @@ import {
   Wallet,
   X,
 } from "lucide-react";
+import { BidforgeMark } from "@/components/shared/BidforgeMark";
 import { useSearchStore } from "@/components/layout/SearchCommand";
 import { useRouterStore } from "@/store/router";
 import { useWalletStore } from "@/store/wallet";
@@ -90,14 +90,14 @@ export function Navbar() {
           <button
             onClick={() => navigate("home")}
             className="group flex items-center gap-2.5"
-            aria-label="VYRA home"
+            aria-label="BIDFORGE home"
           >
             <span className="relative flex h-8 w-8 items-center justify-center">
               <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-300/25 to-violet-400/20 blur-[6px] transition-opacity group-hover:opacity-100" />
-              <Gavel className="relative h-4.5 w-4.5 text-cyan-300" />
+              <BidforgeMark className="relative h-[19px] w-[19px]" />
             </span>
             <span className="font-display text-[15px] font-bold tracking-[0.28em] text-white">
-              VYRA
+              BIDFORGE
               <span className="ml-1.5 hidden text-[9px] font-semibold tracking-[0.3em] text-white/35 sm:inline">
                 AUCTIONS
               </span>

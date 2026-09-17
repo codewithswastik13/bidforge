@@ -80,7 +80,7 @@ export function HelpView() {
           <div>
             <p className="font-display text-base font-semibold text-white">Email & escalations</p>
             <p className="mt-1 text-sm leading-relaxed text-white/50">
-              support@vyra.example — for settlement, verification and account escalations.
+              support@bidforge.example — for settlement, verification and account escalations.
             </p>
           </div>
         </div>

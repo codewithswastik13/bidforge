@@ -31,7 +31,7 @@ export function Hero() {
   const accepted = bids.filter((b) => b.status === "accepted").slice(0, 4);
 
   return (
-    <section ref={sectionRef} className="relative min-h-[100svh] overflow-hidden" aria-label="VYRA live auction hero">
+    <section ref={sectionRef} className="relative min-h-[100svh] overflow-hidden" aria-label="BIDFORGE live auction hero">
       {/* backdrop layers */}
       <div className="radial-fade absolute inset-0" />
       <div className="grid-bg absolute inset-0" />
@@ -148,7 +148,7 @@ export function Hero() {
                 </span>
               </div>
               <span className="font-num rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 text-[10px] tracking-widest text-white/50">
-                {auction?.lotNumber ?? "VY-0088"}
+                {auction?.lotNumber ?? "BF-0088"}
               </span>
             </div>
 

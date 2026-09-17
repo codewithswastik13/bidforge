@@ -22,10 +22,10 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VYRA — The Auction Moves In Real Time",
+  title: "BIDFORGE — The Auction Moves In Real Time",
   description:
-    "VYRA is a premium real-time auction platform. Bid faster, compete live, secure every transaction.",
-  keywords: ["auction", "real-time bidding", "marketplace", "VYRA"],
+    "BIDFORGE is a premium real-time auction platform. Bid faster, compete live, secure every transaction.",
+  keywords: ["auction", "real-time bidding", "marketplace", "BIDFORGE"],
   icons: {
     icon: "/favicon.svg",
   },

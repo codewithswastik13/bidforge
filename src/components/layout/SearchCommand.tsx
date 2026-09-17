@@ -3,7 +3,8 @@
 import { create } from "zustand";
 import { useEffect, useMemo, useState } from "react";
 import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
-import { ArrowRight, Bell, Clock3, Gavel, Hash, TrendingUp, User } from "lucide-react";
+import { ArrowRight, Bell, Clock3, Hash, TrendingUp, User } from "lucide-react";
+import { BidforgeMark } from "@/components/shared/BidforgeMark";
 import { toast } from "sonner";
 import { useAuctionStore } from "@/store/auctions";
 import { useRouterStore } from "@/store/router";
@@ -227,7 +228,7 @@ export function SearchCommand() {
 
       <div className="flex items-center justify-between border-t border-white/8 px-4 py-2.5">
         <span className="flex items-center gap-1.5 text-[10px] text-white/30">
-          <Gavel className="h-3 w-3" /> VYRA global search
+          <BidforgeMark className="h-3 w-3" /> BIDFORGE global search
         </span>
         <span className="font-num text-[10px] text-white/25">esc to close</span>
       </div>

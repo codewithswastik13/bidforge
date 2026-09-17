@@ -1,6 +1,7 @@
 "use client";
 
-import { Gavel, Github, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Github, Instagram, Linkedin, Twitter } from "lucide-react";
+import { BidforgeMark } from "@/components/shared/BidforgeMark";
 import { useRouterStore, type AppView } from "@/store/router";
 
 const COLUMNS: { title: string; links: { label: string; view?: AppView; anchor?: string }[] }[] = [
@@ -9,7 +10,7 @@ const COLUMNS: { title: string; links: { label: string; view?: AppView; anchor?:
     links: [
       { label: "Auctions", view: "auctions" },
       { label: "Explore", view: "auctions" },
-      { label: "Sell with VYRA", view: "sell" },
+      { label: "Sell with BIDFORGE", view: "sell" },
       { label: "Wallet", view: "wallet" },
     ],
   },
@@ -52,12 +53,12 @@ export function Footer() {
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.3fr_2fr]">
           <div>
-            <button onClick={() => navigate("home")} className="flex items-center gap-2.5" aria-label="VYRA home">
+            <button onClick={() => navigate("home")} className="flex items-center gap-2.5" aria-label="BIDFORGE home">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-300/25 bg-gradient-to-br from-cyan-300/15 to-violet-400/10">
-                <Gavel className="h-4 w-4 text-cyan-300" />
+                <BidforgeMark className="h-[18px] w-[18px]" />
               </span>
               <span className="font-display text-base font-bold tracking-[0.28em] text-white">
-                VYRA <span className="text-[10px] font-semibold tracking-[0.3em] text-white/40">AUCTIONS</span>
+                BIDFORGE <span className="text-[10px] font-semibold tracking-[0.3em] text-white/40">AUCTIONS</span>
               </span>
             </button>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/45">
@@ -99,7 +100,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-6 sm:flex-row">
-          <p className="text-[11px] text-white/30">© {new Date().getFullYear()} VYRA Auctions. All rights reserved.</p>
+          <p className="text-[11px] text-white/30">© {new Date().getFullYear()} BIDFORGE Auctions. All rights reserved.</p>
           <button
             onClick={() => {
               document.getElementById("live-system")?.scrollIntoView({ behavior: "smooth" });

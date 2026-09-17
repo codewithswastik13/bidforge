@@ -106,7 +106,7 @@ export function SellView() {
   return (
     <div className="mx-auto w-full max-w-4xl px-5 pb-24 pt-28 sm:px-8 lg:pt-36">
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE }}>
-        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-cyan-300/80">Sell with VYRA</p>
+        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-cyan-300/80">Sell with BIDFORGE</p>
         <h1 className="font-display mt-3 text-4xl font-bold tracking-tight text-white sm:text-5xl">
           List a product
         </h1>
