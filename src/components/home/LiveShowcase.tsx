@@ -5,6 +5,7 @@ import { ArrowRight, Flame, Radio, ShieldCheck, Timer, Zap } from "lucide-react"
 import { AnimatedNumber } from "@/components/shared/AnimatedNumber";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { useRouterStore } from "@/store/router";
+import { useAuctionStore } from "@/store/auctions";
 import { useAuction, useCountdown, useLiveBids, useNow } from "@/hooks/use-vyra";
 import { formatCountdown, formatINR, timeAgo } from "@/lib/format";
 
@@ -16,8 +17,9 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  */
 export function LiveShowcase() {
   const navigate = useRouterStore((s) => s.navigate);
-  const featured = useAuction("auc-chronograph");
-  const bids = useLiveBids("auc-chronograph");
+  const heroId = useAuctionStore((s) => s.heroAuctionId);
+  const featured = useAuction(heroId);
+  const bids = useLiveBids(heroId);
   const now = useNow();
   const cd = useCountdown(featured?.endsAt ?? 0);
   const feed = bids.slice(0, 5);

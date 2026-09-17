@@ -1,0 +1,83 @@
+# VS Code REST Client (extension: humao.rest-client). Click "Send Request".
+
+@host = http://localhost:8000
+
+### Liveness
+GET {{host}}/health/live
+
+### Readiness (DB + Redis)
+GET {{host}}/health/ready
+
+### Register a new bidder
+# @name register
+POST {{host}}/api/v1/auth/register
+Content-Type: application/json
+
+{ "username": "charlie", "password": "charlie123" }
+
+### Log in as the seeded admin
+# @name login
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "admin1234" }
+
+@token = {{login.response.body.access_token}}
+
+### Who am I
+GET {{host}}/api/v1/auth/me
+Authorization: Bearer {{token}}
+
+### List auctions
+GET {{host}}/api/v1/auctions
+
+### Create an auction (admin)
+# @name createAuction
+POST {{host}}/api/v1/admin/auctions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Test Lot",
+  "description": "Created from requests.http",
+  "starting_price": "1000.00",
+  "min_increment": "50.00",
+  "starts_at": "2026-01-01T00:00:00Z",
+  "ends_at": "2030-01-01T00:00:00Z"
+}
+
+@auctionId = {{createAuction.response.body.auction_id}}
+
+### Start it
+POST {{host}}/api/v1/admin/auctions/{{auctionId}}/start
+Authorization: Bearer {{token}}
+
+### Place a bid
+POST {{host}}/api/v1/auctions/{{auctionId}}/bids
+Content-Type: application/json
+Authorization: Bearer {{token}}
+X-Idempotency-Key: 11111111-1111-4111-8111-111111111111
+
+{ "amount": "1050.00" }
+
+### Same idempotency key again -> same bid, no duplicate
+POST {{host}}/api/v1/auctions/{{auctionId}}/bids
+Content-Type: application/json
+Authorization: Bearer {{token}}
+X-Idempotency-Key: 11111111-1111-4111-8111-111111111111
+
+{ "amount": "1050.00" }
+
+### Bid history
+GET {{host}}/api/v1/auctions/{{auctionId}}/bids
+
+### Integrity check
+GET {{host}}/api/v1/admin/auctions/{{auctionId}}/integrity
+Authorization: Bearer {{token}}
+
+### Live metrics (JSON)
+GET {{host}}/api/v1/admin/metrics/live
+Authorization: Bearer {{token}}
+
+### Prometheus metrics
+GET {{host}}/metrics

@@ -10,6 +10,7 @@ export type AppView =
   | "profile"
   | "sell"
   | "admin"
+  | "organizer"
   | "auth"
   | "help";
 

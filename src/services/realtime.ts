@@ -173,15 +173,21 @@ function nextRivalDelay(): number {
 
 /**
  * Starts the local realtime simulation. Safe to call once from the
- * app shell. Replace this with a socket.io connection later — the
- * event names emitted here are exactly the production event contract.
+ * app shell. Used as the offline fallback — when the real bid engine
+ * is reachable, the backend bridge stops the rival engine and drives
+ * the same event names from live WebSocket events instead.
  */
 export function startSimulation(opts?: { heroAuctionId?: string }) {
   if (engine.running) return;
   engine.running = true;
   realtimeBus.connect();
+  startMetricsTicker();
+  startRivalEngine(opts?.heroAuctionId ?? "auc-chronograph");
+}
 
-  const heroAuctionId = opts?.heroAuctionId ?? "auc-chronograph";
+/** Ambient 1s metrics stream only (hero system-status section). */
+export function startMetricsTicker() {
+  if (engine.metricsTimer) return;
 
   /* ---- global 1s tick: metrics stream ---- */
   engine.metricsTimer = setInterval(() => {
@@ -209,11 +215,17 @@ export function startSimulation(opts?: { heroAuctionId?: string }) {
     };
     realtimeBus.emit("METRICS_TICK", { metrics });
   }, 1000);
+}
+
+/** Rival bidding engine — fake ambient bids for fallback mode only. */
+export function startRivalEngine(heroAuctionId: string) {
+  if (engine.rivalTimer) return;
 
   /* ---- rival bidding engine (lazy store read, no import cycle) ---- */
   const rivalTick = () => {
     import("@/store/auctions").then(({ useAuctionStore }) => {
       const store = useAuctionStore.getState();
+      if (store.liveMode) return; // engine owns price truth — never fake-bid
       const liveAuctions = store.auctions.filter((a) => a.status === "live");
       for (const a of liveAuctions) {
         const chance = a.id === heroAuctionId ? 0.55 : 0.18;
@@ -225,6 +237,14 @@ export function startSimulation(opts?: { heroAuctionId?: string }) {
     engine.rivalTimer = setTimeout(rivalTick, nextRivalDelay());
   };
   engine.rivalTimer = setTimeout(rivalTick, 1500);
+}
+
+/** Stops fake rival bids while keeping the ambient metrics stream. */
+export function stopRivalEngine() {
+  if (engine.rivalTimer) {
+    clearTimeout(engine.rivalTimer);
+    engine.rivalTimer = null;
+  }
 }
 
 export function stopSimulation() {

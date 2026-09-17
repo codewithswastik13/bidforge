@@ -8,6 +8,8 @@ interface MetricsState {
   metrics: SystemMetrics;
   wired: boolean;
   subscribeRealtime: () => void;
+  /** merges authoritative engine counters over the ambient snapshot */
+  mergeBackendMetrics: (accepted: number, rejected: number, ws: number) => void;
 }
 
 export const useMetricsStore = create<MetricsState>((set, get) => ({
@@ -18,4 +20,13 @@ export const useMetricsStore = create<MetricsState>((set, get) => ({
     set({ wired: true });
     realtimeBus.on("METRICS_TICK", ({ metrics }) => set({ metrics }));
   },
+  mergeBackendMetrics: (accepted, rejected, ws) =>
+    set((s) => ({
+      metrics: {
+        ...s.metrics,
+        acceptedBids: accepted,
+        rejectedBids: rejected,
+        activeConnections: ws,
+      },
+    })),
 }));

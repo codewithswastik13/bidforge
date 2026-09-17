@@ -21,6 +21,7 @@ import { useNotifications, useUser } from "@/hooks/use-vyra";
 import { useWallet } from "@/hooks/use-vyra";
 import { useAuctionList } from "@/hooks/use-vyra";
 import { useRouterStore } from "@/store/router";
+import { useAuthStore } from "@/store/auth";
 import { SEED_USER } from "@/lib/mock-data";
 import { formatINR, timeAgo } from "@/lib/format";
 import { formatDateTime } from "@/lib/format";
@@ -42,6 +43,7 @@ const TABS = [
 type TabKey = (typeof TABS)[number]["key"];
 
 export function ProfileView() {
+  const logout = useAuthStore((s) => s.logout);
   const { user } = useUser();
   const profile = user ?? SEED_USER; // demo-режим: гостю показываем сид-профиль
   const [tab, setTab] = useState<TabKey>("bidding");
@@ -222,6 +224,16 @@ export function ProfileView() {
                 </button>
               </div>
             ))}
+            <button
+              onClick={() => {
+                logout();
+                toast.success("Signed out", { description: "Your session has ended — sign in to bid again." });
+                navigate("home");
+              }}
+              className="group mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-rose-400/25 bg-rose-500/[0.07] px-4 py-3 text-[12px] font-bold uppercase tracking-[0.16em] text-rose-300/90 transition-all hover:border-rose-400/45 hover:bg-rose-500/[0.12]"
+            >
+              Sign out
+            </button>
           </div>
         )}
       </div>

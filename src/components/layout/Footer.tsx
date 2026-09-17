@@ -20,7 +20,7 @@ const COLUMNS: { title: string; links: { label: string; view?: AppView; anchor?:
       { label: "How It Works", view: "home", anchor: "how-it-works" },
       { label: "Help Center", view: "help" },
       { label: "Contact", view: "help" },
-      { label: "Admin Console", view: "admin" },
+      { label: "Admin Console", view: "organizer" },
     ],
   },
   {

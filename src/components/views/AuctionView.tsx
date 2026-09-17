@@ -352,6 +352,7 @@ function BidPanel({
 }) {
   const auction = useAuction(auctionId);
   const placeOwnBid = useAuctionStore((s) => s.placeOwnBid);
+  const liveMode = useAuctionStore((s) => s.liveMode);
   const available = useWalletStore((s) => s.availableForBidding());
   const [amount, setAmount] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -401,9 +402,15 @@ function BidPanel({
     setError(null);
     setAmount("");
     setSuccess(n);
-    toast.success("Bid accepted", {
-      description: `You lead at ${formatINR(n)} — rivals have been notified.`,
-    });
+    if (liveMode) {
+      toast.success("Bid submitted", {
+        description: `₹${n.toLocaleString("en-IN")} sent to the engine — awaiting confirmation.`,
+      });
+    } else {
+      toast.success("Bid accepted", {
+        description: `You lead at ${formatINR(n)} — rivals have been notified.`,
+      });
+    }
   }
 
   return (

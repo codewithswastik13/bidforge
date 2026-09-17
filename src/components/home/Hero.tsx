@@ -17,9 +17,10 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   const navigate = useRouterStore((s) => s.navigate);
-  const auction = useAuction("auc-chronograph");
-  const bids = useLiveBids("auc-chronograph");
-  const pulse = useAuctionStore((s) => s.bidPulse["auc-chronograph"] ?? 0);
+  const heroId = useAuctionStore((s) => s.heroAuctionId);
+  const auction = useAuction(heroId);
+  const bids = useLiveBids(heroId);
+  const pulse = useAuctionStore((s) => s.bidPulse[heroId] ?? 0);
   const now = useNow();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
@@ -239,7 +240,7 @@ export function Hero() {
 
             <button
               onClick={() => {
-                navigate("auction", { id: "auc-chronograph" });
+                navigate("auction", { id: heroId });
                 toast("Entering live room", { description: "Limited Edition Chronograph" });
               }}
               className="group mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-cyan-300/30 bg-cyan-300/10 py-3 text-xs font-bold uppercase tracking-[0.18em] text-cyan-200 transition-all hover:bg-cyan-300/20 hover:shadow-[0_8px_30px_-6px_oklch(0.82_0.14_205/0.5)]"
